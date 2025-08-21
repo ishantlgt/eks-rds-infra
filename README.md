@@ -266,8 +266,8 @@ This will create:
 ### Step 4: Build and Push Docker Image
 
 ```bash
-# Navigate to the image directory
-cd project
+# Navigate to the docker project directory
+cd <your project>
 
 # Build the Docker image
 docker build -t my-python-app:latest .
