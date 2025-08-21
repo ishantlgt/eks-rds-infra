@@ -172,7 +172,7 @@ cp `project/terraform.tfvars.example` to `project/terraform.tfvars`  with your s
 region          = "us-east-1"
 project_name    = "project"
 vpc_cidr        = "10.0.0.0/16"
-environment     = "dev"
+environment     = "prod"
 
 # Subnets
 public_subnet_az1_cidr      = "10.0.0.0/24"
@@ -311,16 +311,16 @@ kubectl apply -f ingress.yaml
 
 ```bash
 # Check pod status
-kubectl get pods -n my-python-app
+kubectl get pods -n production
 
 # Check HPA status
-kubectl get hpa -n my-python-app
+kubectl get hpa -n production
 
 # Check ingress
-kubectl get ingress -n my-python-app
+kubectl get ingress -n production
 
 # Get ALB endpoint
-kubectl get ingress -n my-python-app -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}'
+kubectl get ingress -n production -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}'
 ```
 
 ---
