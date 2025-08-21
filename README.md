@@ -215,8 +215,8 @@ instance_class = "db.t3.micro"
 images = ["image-test"]
 
 # Domain & ACM
-domain_name      = "example.teamtalentelgia.com"
-san_names        = "www.example.teamtalentelgia.com"
+domain_name      = "domain.com"
+san_names        = "www.domain.com"
 route53_zone_id  = "ZXXXXXXXXXXXXXX"
 
 # S3 for Rekognition
