@@ -314,7 +314,7 @@ cd ../k8
 kubectl apply -f namespace.yaml
 kubectl apply -f service-account.yaml
 kubectl apply -f secrets-provider-class.yaml
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml ##Change the image name with your image
 kubectl apply -f service.yaml
 kubectl apply -f hpa.yaml
 kubectl apply -f ingress.yaml
@@ -345,13 +345,13 @@ kubectl get ingress -n production -o jsonpath='{.items[0].status.loadBalancer.in
 
 #### Horizontal Pod Autoscaler (HPA)
 - **Metric**: CPU utilization
-- **Target**: 70%
-- **Min Replicas**: 2
-- **Max Replicas**: 10
+- **Target**: 80%
+- **Min Replicas**: 1
+- **Max Replicas**: 5
 
 #### Cluster Autoscaler
 - **Min Nodes**: 1
-- **Max Nodes**: 5
+- **Max Nodes**: 10
 - **Scale down**: After 10 minutes of low utilization
 
 ### SSL/TLS Configuration
