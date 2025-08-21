@@ -15,13 +15,13 @@ The setup is built using a **modular Terraform structure** with environment sepa
 
 ### Infrastructure Components
 
-1. **🌐 VPC & Networking**
+1. ** VPC & Networking**
    - Private & public subnets across multiple AZs
    - NAT Gateway for outbound internet traffic from private subnets
    - Internet Gateway for public subnet connectivity
    - Route tables and security groups for controlled access
 
-2. **☸️ EKS Cluster**
+2. ** EKS Cluster**
    - Runs inside private subnets for enhanced security
    - [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) to scale worker nodes automatically
    - [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to scale pods dynamically
@@ -29,7 +29,7 @@ The setup is built using a **modular Terraform structure** with environment sepa
    - [Metrics Server](https://github.com/kubernetes-sigs/metrics-server) for resource monitoring
    - [Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/) to mount secrets from Secrets Manager into pods
 
-3. **🗄️ RDS (MySQL)**
+3. ** RDS (MySQL)**
    - Multi-AZ deployment for high availability
    - Accessible only from the EKS cluster via security groups
    - Runs inside private subnets
