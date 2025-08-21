@@ -63,8 +63,8 @@ The setup is built using a **modular Terraform structure** with environment sepa
 │   Public Subnet │    │   Public Subnet │
 │                 │    │                 │
 │  Internet GW    │    │   NAT Gateway   │
-│       │         │    │       │         │
-│      ALB ◄──────┼────┼───────┘         │
+│       │         │    │                 │
+│      ALB        ┼    ┼                 │
 └─────────────────┘    └─────────────────┘
          │                       │
 ┌─────────────────┐    ┌─────────────────┐
