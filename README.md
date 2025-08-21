@@ -53,10 +53,18 @@ The setup is built using a **modular Terraform structure** with environment sepa
 ### High Level Architecture Diagram
 
 ```
+┌─────────────────────────────────────────┐
+│              Route 53                   │
+│        DNS Management & Routing         │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
 ┌─────────────────┐    ┌─────────────────┐
 │   Public Subnet │    │   Public Subnet │
 │                 │    │                 │
 │  Internet GW    │    │   NAT Gateway   │
+│       │         │    │       │         │
+│      ALB ◄──────┼────┼───────┘         │
 └─────────────────┘    └─────────────────┘
          │                       │
 ┌─────────────────┐    ┌─────────────────┐
@@ -73,6 +81,9 @@ The setup is built using a **modular Terraform structure** with environment sepa
 │  │         │  │ Manager │  │         │ │
 │  └─────────┘  └─────────┘  └─────────┘ │
 └─────────────────────────────────────────┘
+
+Traffic Flow:
+Internet → Route 53 → ALB → EKS Pods → RDS
 ```
 
 ---
