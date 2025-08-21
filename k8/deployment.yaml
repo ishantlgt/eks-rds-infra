@@ -1,0 +1,140 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      serviceAccountName: myapp
+      containers:
+        - name: peacepulse
+          image: 836217041594.dkr.ecr.us-east-1.amazonaws.com/image-test-dev:latest
+          command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: 1000Mi
+              cpu: 1000m
+            limits:
+              memory: 3500Mi
+              cpu: 2500m
+          volumeMounts:
+            - name: secrets
+              mountPath: /mnt/secrets
+              readOnly: true
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: AWS_BUCKET_NAME
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: AWS_REGION
+            - name: COLLECTION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: COLLECTION_ID
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: DB_HOST
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: MYSQL_USER
+            - name: MYSQL_DB
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: MYSQL_DB
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: JWT_ALGORITHM
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: JWT_ALGORITHM
+
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: JWT_SECRET_KEY
+            - name: PORT
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: PORT
+            - name: SMTP_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: SMTP_API_KEY
+            - name: SMTP_FROM_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: SMTP_FROM_EMAIL
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: SMTP_PASSWORD
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: SMTP_PORT
+            - name: SMTP_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: SMTP_SERVER
+            - name: UPLOAD_DIR
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-k8s-secret
+                  key: UPLOAD_DIR
+           
+          
+      volumes:
+        - name: secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: myapp-aws-secrets

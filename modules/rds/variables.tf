@@ -1,0 +1,11 @@
+variable "project_name" {}
+variable "private_app_subnet_ids" {}
+variable "instance_class" {}
+variable "db_name" {}
+variable "db_username" {}
+variable "db_password" {}
+variable "rds_sg_id" {}
+variable "vpc_id" {}
+variable "engine_version" {}
+variable "rds_storage" {}
+variable "environment" {}
