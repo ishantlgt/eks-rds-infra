@@ -11,7 +11,7 @@ The setup is built using a **modular Terraform structure** with environment sepa
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 ### Infrastructure Components
 
@@ -34,17 +34,17 @@ The setup is built using a **modular Terraform structure** with environment sepa
    - Accessible only from the EKS cluster via security groups
    - Runs inside private subnets
 
-4. **🔐 Secrets Management**
+4. ** Secrets Management**
    - Application credentials and DB passwords stored in AWS Secrets Manager
    - Kubernetes pods consume these secrets using the CSI driver + `SecretProviderClass`
    - Automatic secret rotation capabilities
 
-5. **🔒 Certificates (ACM)**
+5. ** Certificates (ACM)**
    - SSL/TLS certificates provisioned in **AWS Certificate Manager (ACM)**
    - Certificates automatically attached to the **ALB Ingress** via annotations
    - Supports HTTPS traffic for secure communication
 
-6. **🐍 Python Application**
+6. ** Python Application**
    - Containerized and stored in **Amazon ECR**
    - Deployed using Kubernetes manifests
    - Exposed via a Kubernetes Service + ALB ingress
@@ -88,7 +88,7 @@ Internet → Route 53 → ALB → EKS Pods → RDS
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 ├── project/                              # Project
@@ -141,7 +141,7 @@ Internet → Route 53 → ALB → EKS Pods → RDS
 
 ---
 
-## ⚙️ Prerequisites
+##  Prerequisites
 
 Before you begin, ensure you have the following tools installed and configured:
 
@@ -165,7 +165,7 @@ Your AWS user/role needs permissions for:
 
 ---
 
-## 🚀 Deployment Guide
+##  Deployment Guide
 
 ### Step 1: Clone the Repository
 
@@ -338,7 +338,7 @@ kubectl get ingress -n production -o jsonpath='{.items[0].status.loadBalancer.in
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 
 ### Autoscaling Configuration
@@ -366,7 +366,7 @@ domain_name = "your-domain.com"
 
 
 
-## 🔒 Security Best Practices
+##  Security Best Practices
 
 This setup implements several security best practices:
 
@@ -391,7 +391,7 @@ This setup implements several security best practices:
 
 ---
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -419,7 +419,7 @@ This setup implements several security best practices:
 
 
 
-## 🧹 Cleanup
+##  Cleanup
 
 To avoid ongoing AWS charges, destroy the resources when no longer needed:
 
@@ -440,7 +440,7 @@ terraform destroy -var-file=terraform.tfvars
 
 
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Amazon EKS User Guide](https://docs.aws.amazon.com/eks/latest/userguide/)
 - [Terraform AWS Provider Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
