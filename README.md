@@ -236,27 +236,9 @@ JWT_SECRET_KEY = "CHANGE_ME"
 JWT_ALGORITHM  = "HS256"
 
 
-### Step 3: Build and Push Docker Image
 
-```bash
-# Navigate to the image directory
-cd project
 
-# Build the Docker image
-docker build -t my-python-app:latest .
-
-# Get ECR login token and login
-aws ecr get-login-password --region <your-region> | \
-  docker login --username AWS --password-stdin <account-id>.dkr.ecr.<your-region>.amazonaws.com
-
-# Tag the image for ECR
-docker tag my-python-app:latest <account-id>.dkr.ecr.<your-region>.amazonaws.com/my-python-app:latest
-
-# Push to ECR
-docker push <account-id>.dkr.ecr.<your-region>.amazonaws.com/my-python-app:latest
-```
-
-### Step 4: Deploy Infrastructure with Terraform
+### Step 3: Deploy Infrastructure with Terraform
 
 ```bash
 # Initialize Terraform
@@ -280,6 +262,26 @@ This will create:
 - Secrets Manager secrets
 - IAM roles and policies
 - Security groups
+
+### Step 4: Build and Push Docker Image
+
+```bash
+# Navigate to the image directory
+cd project
+
+# Build the Docker image
+docker build -t my-python-app:latest .
+
+# Get ECR login token and login
+aws ecr get-login-password --region <your-region> | \
+  docker login --username AWS --password-stdin <account-id>.dkr.ecr.<your-region>.amazonaws.com
+
+# Tag the image for ECR
+docker tag my-python-app:latest <account-id>.dkr.ecr.<your-region>.amazonaws.com/my-python-app:latest
+
+# Push to ECR
+docker push <account-id>.dkr.ecr.<your-region>.amazonaws.com/my-python-app:latest
+```
 
 ### Step 5: Configure kubectl
 
