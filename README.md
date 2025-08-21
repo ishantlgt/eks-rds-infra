@@ -80,7 +80,7 @@ The setup is built using a **modular Terraform structure** with environment sepa
 ## 📂 Project Structure
 
 ```
-├── image/                              # Project
+├── project/                              # Project
 │   ├── main.tf                        # Root infrastructure definition
 │   ├── terraform.tfvars.example       # Environment-specific(example) variables
 │   ├── variables.tf                   # Variable definitions
@@ -165,40 +165,82 @@ cd eks-rds-infra
 
 ### Step 2: Configure Variables
 
-Edit `image/terraform.tfvars` with your specific configuration:
+cp `project/terraform.tfvars.example` to `project/terraform.tfvars`  with your specific configuration:
 
 ```hcl
-# AWS Region
-aws_region = "us-west-2"
 
-# Project Configuration
-project_name = "my-python-app"
-environment  = "dev"
+region          = "us-east-1"
+project_name    = "project"
+vpc_cidr        = "10.0.0.0/16"
+environment     = "dev"
 
-# VPC Configuration
-vpc_cidr = "10.0.0.0/16"
+# Subnets
+public_subnet_az1_cidr      = "10.0.0.0/24"
+public_subnet_az2_cidr      = "10.0.1.0/24"
+private_app_subnet_az1_cidr = "10.0.2.0/24"
+private_app_subnet_az2_cidr = "10.0.3.0/24"
 
-# EKS Configuration
-cluster_version = "1.28"
-node_instance_types = ["t3.medium"]
-node_desired_capacity = 2
-node_max_capacity = 5
-node_min_capacity = 1
+# EKS
+eks_cluster_name  = "eks"
+eks_version       = "1.31"
+node_instance_type   = "t2.small"
+node_min_capacity    = 1
+node_max_capacity    = 1
+node_desired_capacity = 1
+enable_irsa          = true
+enable_private_api   = true
+enable_public_api    = true
+secret_name          = "app-vars"
 
-# RDS Configuration
-db_instance_class = "db.t3.micro"
-db_allocated_storage = 20
-db_engine_version = "8.0"
+# RDS
+engine_version = "8.0.42"
+rds_storage    = 20
+db_name        = "image_db"
+db_username    = "db_user"
+db_password    = "CHANGE_ME" # <-- do not commit real password
+instance_class = "db.t3.micro"
 
-# Domain for SSL certificate (optional)
-domain_name = "example.com"
-```
+# ECR Images
+images = ["image-test"]
+
+# Domain & ACM
+domain_name      = "example.teamtalentelgia.com"
+san_names        = "www.example.teamtalentelgia.com"
+route53_zone_id  = "ZXXXXXXXXXXXXXX"
+
+# S3 for Rekognition
+AWS_BUCKET_NAME       = "example-bucket"
+AWS_ACCESS_KEY_ID     = "YOUR_AWS_ACCESS_KEY"
+AWS_SECRET_ACCESS_KEY = "YOUR_AWS_SECRET_KEY"
+AWS_REGION            = "us-east-1"
+UPLOAD_DIR            = "uae"
+COLLECTION_ID         = "rekognition-uae"
+
+# Database (App side)
+MYSQL_USER          = "db_user"
+MYSQL_PASSWORD      = "CHANGE_ME"
+MYSQL_DB            = "image_db"
+DB_HOST             = "example-db-endpoint.rds.amazonaws.com"
+PORT                = "3306"
+MYSQL_ROOT_PASSWORD = "CHANGE_ME"
+
+# SMTP
+SMTP_API_KEY    = "smtp_user@example.com"
+SMTP_PASSWORD   = "CHANGE_ME"
+SMTP_FROM_EMAIL = "noreply@example.com"
+SMTP_SERVER     = "smtp.example.com"
+SMTP_PORT       = "587"
+
+# JWT
+JWT_SECRET_KEY = "CHANGE_ME"
+JWT_ALGORITHM  = "HS256"
+
 
 ### Step 3: Build and Push Docker Image
 
 ```bash
 # Navigate to the image directory
-cd image
+cd project
 
 # Build the Docker image
 docker build -t my-python-app:latest .
@@ -373,7 +415,7 @@ To avoid ongoing AWS charges, destroy the resources when no longer needed:
 kubectl delete -f k8/
 
 # Destroy Terraform infrastructure
-cd image
+cd project
 terraform destroy -var-file=terraform.tfvars
 ```
 
