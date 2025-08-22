@@ -208,7 +208,7 @@ engine_version = "8.0.42"
 rds_storage    = 20
 db_name        = "image_db"
 db_username    = "db_user"
-db_password    = "CHANGE_ME" # <-- do not commit real password
+db_password    = "CHANGE_ME"
 instance_class = "db.t3.micro"
 
 # ECR Images
