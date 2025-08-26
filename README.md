@@ -449,5 +449,3 @@ terraform destroy -var-file=terraform.tfvars
 - [Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/)
 
 ---
-
-⭐ If this project helped you, please give it a star! ⭐
